@@ -1,4 +1,7 @@
+//simple keyboard button
 int buttonPin = 32;
+
+//encoder
 #define outputA 38
 #define outputB 39
 #define encoderClick 40
@@ -8,18 +11,34 @@ int currentStateA;
 int lastStateA;
 String currentDir = "";
 
+//interrupt button, copied and modified from official arduino website code
+
+const byte ledPin = 2;
+const byte interruptPin = 5;
+volatile byte state = 0;
+//
+void blink() {
+  state = state + 1;
+  if (state == 2) {
+    state = 0;
+  }
+  digitalWrite(ledPin, state);
+}
 void setup() {
   pinMode(buttonPin, INPUT_PULLUP);
 
   pinMode(outputA, INPUT);
   pinMode(outputB, INPUT);
   pinMode(encoderClick, INPUT_PULLUP);
-
   Serial.begin(9600);
   lastStateA = digitalRead(outputA);
-  // put your setup code here, to run once:
-}
 
+  pinMode(ledPin, OUTPUT);
+  pinMode(interruptPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(interruptPin), blink, CHANGE);
+
+  Serial.println("---system online---");
+}
 void checkEncoder() {
   if (digitalRead(encoderClick) == LOW) {
     Serial.println("click pressed");
@@ -56,7 +75,6 @@ void checkEncoder() {
   // Put in a slight delay to help debounce the reading
   delay(1);
 }
-}
 
 void checkMechnicalSwitch() {
   if (digitalRead(buttonPin) == LOW) {
@@ -67,5 +85,7 @@ void checkMechnicalSwitch() {
 
 void loop() {
   checkMechnicalSwitch();
+  checkEncoder();
+
   // put your main code here, to run repeatedly:
 }
