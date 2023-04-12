@@ -7,12 +7,12 @@ class StevesAwesomeRotaryEncoder
 {
   public:
 
-    StevesAwesomeRotaryEncoder(int _pin1, int _pin2);
+    StevesAwesomeRotaryEncoder(int _pin1, int _pin2, int _encoderNumb);
     void process();
-    void leftClickHandler(void (*f)());
-    void rightClickHandler(void (*f)());
-    void (*leftClickCallback)();
-    void (*rightClickCallback)();
+    void leftClickHandler(void (*f)(int));
+    void rightClickHandler(void (*f)(int));
+    void (*leftClickCallback)(int);
+    void (*rightClickCallback)(int);
 
   private:
 
@@ -22,6 +22,7 @@ class StevesAwesomeRotaryEncoder
     int oldPosition;
     int subCount;
     int totalCount;
+    int encoderNumb;
 };
 
 #endif

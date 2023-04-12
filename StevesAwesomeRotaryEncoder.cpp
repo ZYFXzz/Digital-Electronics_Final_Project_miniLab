@@ -1,10 +1,11 @@
 #include "Arduino.h"
 #include "StevesAwesomeRotaryEncoder.h"
 
-StevesAwesomeRotaryEncoder::StevesAwesomeRotaryEncoder(int _pin1, int _pin2)
+StevesAwesomeRotaryEncoder::StevesAwesomeRotaryEncoder(int _pin1, int _pin2, int _encoderNumb)
 {
   pin1 = _pin1;
   pin2 = _pin2;
+  encoderNumb = _encoderNumb;
 
   oldPosition = -1;
   newPosition = -1;
@@ -17,12 +18,12 @@ StevesAwesomeRotaryEncoder::StevesAwesomeRotaryEncoder(int _pin1, int _pin2)
   digitalWrite(pin2, HIGH);
 }
 
-void StevesAwesomeRotaryEncoder::leftClickHandler(void (*f)())
+void StevesAwesomeRotaryEncoder::leftClickHandler(void (*f)(int))
 {
   leftClickCallback = *f;
 }
 
-void StevesAwesomeRotaryEncoder::rightClickHandler(void (*f)())
+void StevesAwesomeRotaryEncoder::rightClickHandler(void (*f)(int))
 {
   rightClickCallback = *f;
 }
@@ -43,10 +44,10 @@ void StevesAwesomeRotaryEncoder::process()
 
     if (subCount == -4) {
       subCount = 0;
-      rightClickCallback();
+      rightClickCallback(encoderNumb);
     } else if (subCount == 4) {
       subCount = 0;
-      leftClickCallback();
+      leftClickCallback(encoderNumb);
     }
     oldPosition = newPosition;
   }

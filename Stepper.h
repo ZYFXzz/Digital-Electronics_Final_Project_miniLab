@@ -13,6 +13,7 @@ public:
   void (*maxStepCallback)();
   void (*stepCallback)(int);
   void setTimePerStep(int _timePerStep);
+  void stepReset();
 
   int numSteps;
   int currentStep;

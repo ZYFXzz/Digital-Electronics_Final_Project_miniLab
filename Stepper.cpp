@@ -23,7 +23,7 @@ void Stepper::nextStep() {
     maxStepCallback();
   }
 }
-void Stepper::maxStepHandler(void (*f)()){  // add this for extra parameter/control input, when number of step reached its maximum
+void Stepper::maxStepHandler(void (*f)()) {  // add this for extra parameter/control input, when number of step reached its maximum
   maxStepCallback = *f;
 }
 
@@ -33,4 +33,8 @@ void Stepper::setTimePerStep(int _timePerStep) {
 
 void Stepper::stepHandler(void (*f)(int)) {
   stepCallback = *f;
+}
+
+void Stepper::stepReset() {
+  currentStep = 0;
 }
