@@ -8,6 +8,7 @@ Teensy Board<br>
 Adafruit MCP23017 <br>
 Adafruit Neopixel <br>
 Adafruit SSD1306  <br>
+Just installed them inside the library manage tool inside Arduino IDE
 
 
 
